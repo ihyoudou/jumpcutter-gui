@@ -18,4 +18,4 @@ Tested on Windows 8.1 (amd64, Python 3.7.3), Windows 10 (amd64, Python 3.7.3), D
 You need to specify FPS value, it is pretty common issue with 50fps videos
 
 ## Known issues
-- Youtube links don't work (some sort of problem in pyTube, will be replaced with youtube-dl)
+- Youtube links don't work (some sort of problem in pyTube, need to be replaced with youtube-dl)
