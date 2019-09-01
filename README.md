@@ -7,7 +7,7 @@ Jumpcutter-gui is my attempt to make something useful in Python, it is a GUI wra
 ## How to install
 Manual way:  
 ```
-git clone https://github.com/isseihere/jumpcutter-gui
+git clone https://github.com/ihyoudou/jumpcutter-gui
 cd jumpcutter-gui
 pip install -r requirements.txt
 python jumpcutter-gui.py
