@@ -1,4 +1,3 @@
-from contextlib import closing
 from PIL import Image
 import subprocess
 from audiotsm import phasevocoder
@@ -10,18 +9,42 @@ import math
 from shutil import copyfile, rmtree
 import os
 import argparse
-from pytube import YouTube
+import youtube_dl
 
 def statuscheck():
     if os.path.exists(".jumpcutterdone"):
         os.remove(".jumpcutterdone")
 
 def downloadFile(url):
-    name = YouTube(url).streams.first().download()
-    newname = name.replace(' ','_')
-    os.rename(name,newname)
-    return newname
-
+    # I replaced PyTube with youtube-dl, not the pretties code, but it works!
+    ydl_opts = {
+        'outtmpl': '%(title)s.%(ext)s'
+    }
+    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+        ytdl = ydl.download([url])
+        info = ydl.extract_info(url, download=True)
+        name = ydl.prepare_filename(info)
+    # Variable that store filename without extension (because youtube-dl gives filename before merge)
+    withoutExtension = name.replace(os.path.splitext(name)[1], '')
+    print("Without extension: " + withoutExtension)
+    # Now program is trying to find if .mp4/mkv/webm file exist, add proper extension and rename file to not have spaces
+    if os.path.exists(withoutExtension + ".mp4"):
+        nameWithExtension = withoutExtension + ".mp4"
+        newname = nameWithExtension.replace(' ','_')
+        os.rename(nameWithExtension,newname)
+        return newname
+    elif os.path.exists(withoutExtension + ".mkv"):
+        nameWithExtension = withoutExtension + ".mkv"
+        newname = nameWithExtension.replace(' ','_')
+        os.rename(nameWithExtension,newname)
+        return newname
+    elif os.path.exists(withoutExtension + ".webm"):
+        nameWithExtension = withoutExtension + ".webm"
+        newname = nameWithExtension.replace(' ','_')
+        os.rename(nameWithExtension,newname)
+        return newname
+    else:
+        print("Cannot find downloaded file")
 def getMaxVolume(s):
     maxv = float(np.max(s))
     minv = float(np.min(s))
