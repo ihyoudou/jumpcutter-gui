@@ -30,7 +30,7 @@ if os.path.exists("TEMP"):
         shutil.rmtree("TEMP", ignore_errors=True)
 
 # First group of widgets - select original file and place to save jumpcutted
-group1 = LabelFrame(window, text="File", padx=1, pady=1)
+group1 = LabelFrame(window, text="Main", padx=1, pady=1)
 group1.grid(padx=1, pady=1)
 
 grouplocalremote = LabelFrame(group1, text="Use Local/URL", padx=1, pady=1)

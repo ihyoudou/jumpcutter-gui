@@ -17,7 +17,7 @@ window.resizable(False, False)
 selectinputlabel = Label(window, text="Select input file")
 selectinputlabel.grid(column=0, row=0)
 
-inputFileLabel = Entry(window, width=30)
+inputFileLabel = Entry(window, width=28)
 inputFileLabel.grid(column=0, row=1)
 
 def inputFileItem():
@@ -39,7 +39,7 @@ def inputFileItem():
     saveFile = saveFileLocation.get()
 
 inputButtonFile = Button(window, text="...", command=inputFileItem)
-inputButtonFile.grid(column=8, row=1)
+inputButtonFile.grid(column=1, row=1)
 
 # Widgets for selecting output for final video
 # By default program will output video with _cut sufix in the same directory
@@ -55,11 +55,11 @@ def saveFileItem():
     # Debug messagebox with path
     #print('Selected video path: ' + selectedFile)
 
-saveFileLocation = Entry(window, width=30)
+saveFileLocation = Entry(window, width=28)
 saveFileLocation.grid(column=0, row=3)
 
 saveButtonFile = Button(window, text="...", command=saveFileItem)
-saveButtonFile.grid(column=8, row=3)
+saveButtonFile.grid(column=1, row=3)
 
 selectStartLabel = Label(window, text="Start time (hh:mm:ss)")
 selectStartLabel.grid(column=0, row=4)
@@ -87,8 +87,9 @@ def fasterEnc():
     call(cmd, shell=True)
 
 slowgoButton = Button(window, text="Go! (slower)", command=slowerEnc)
-slowgoButton.grid(column=0, row=11)
+slowgoButton.grid(column=0, row=12,sticky=E+W)
 
 fastgoButton = Button(window, text="Go! (faster)", command=fasterEnc)
-fastgoButton.grid(column=0, row=12)
+fastgoButton.grid(column=0, row=13,sticky=E+W)
+window.grid_columnconfigure(1,weight=1)
 window.mainloop()
