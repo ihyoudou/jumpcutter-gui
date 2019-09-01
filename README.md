@@ -14,6 +14,5 @@ You also need to have ffmpeg installed!
 Tested on Windows 8.1 (amd64, Python 3.7.3), Windows 10 (amd64, Python 3.7.3), Debian buster (i386, Python)
 
 ## Troubleshooting
-**My final video have audio of sync, what to do?!**
-
+**My final video have audio of sync, what to do?!**  
 You need to specify FPS value, it is pretty common issue with 50fps videos
