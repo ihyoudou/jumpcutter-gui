@@ -71,7 +71,7 @@ def useurl():
         fileLocation.grid_remove()
         hiddenLocal = True
     hiddenURL = not hiddenURL
-    print(option.get())
+    print("Selected Local/URL value: " + option.get())
 
 # Variable that is responsible for allow only one radiobutton to be selected
 option = StringVar()
