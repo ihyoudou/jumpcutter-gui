@@ -18,6 +18,7 @@ selectedFile = ""
 saveFile = ""
 hiddenLocal = False
 hiddenURL = True
+jumpcutterCMD = "python jumpcutter.py"
 
 
 # Checking if TEMP folder exist (failed/cancelled task)
@@ -173,18 +174,18 @@ silentspeed.grid(column=4, row=9)
 
 # Action after clicking Go! button
 def execute():
-
+    global jumpcutterCMD
     # Checking if file is selected + base command
-    if option == "local":
+    if option.get() == "local":
         if selectedFile == "":
             messagebox.showinfo('Warning', "Input file was not set!")
         else:
-            jumpcutterCMD = "python jumpcutter.py --input_file " + selectedFile
-    elif option == "url":
+            jumpcutterCMD = jumpcutterCMD + " --input_file " + selectedFile
+    elif option.get() == "url":
         if URLLocation.get() == "":
             messagebox.showinfo('Warning', "Input URL was not set!")
         else:
-            jumpcutterCMD = "python jumpcutter.py --url " + URLLocation.get()
+            jumpcutterCMD = jumpcutterCMD + " --url " + URLLocation.get()
 
     # Checking if save destination entry is empty
     if saveFile == "":
