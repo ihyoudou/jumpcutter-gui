@@ -1,3 +1,6 @@
+# Jumpcutter-gui by Issei Hyoudou 2019
+# Contact: issei@issei.space
+# Repo: https://github.com/isseihere/jumpcutter-gui
 from tkinter import *
 from tkinter import filedialog
 from tkinter import messagebox
@@ -15,8 +18,6 @@ selectedFile = ""
 saveFile = ""
 hiddenLocal = False
 hiddenURL = True
-
-
 
 
 # Checking if TEMP folder exist (failed/cancelled task)
@@ -38,42 +39,44 @@ def localfile():
     if hiddenLocal:
         labelLocalFile.grid()
         fileLocation.grid()
+        selectFile.grid()
         labelURLFile.grid_remove()
         URLLocation.grid_remove()
-        hiddenURL = False
     else:
         labelURLFile.grid_remove()
         URLLocation.grid_remove()
+        selectFile.grid()
         labelLocalFile.grid()
         fileLocation.grid()
-        hiddenURL = True
-    hiddenLocal = not hiddenLocal
+    print("Selected Local/URL value: " + option.get())
 
 def useurl():
     global hiddenURL
     if hiddenURL:
+        # Action if URL radiobutton is selected
         labelLocalFile.grid_remove()
         fileLocation.grid_remove()
+        selectFile.grid_remove()
         labelURLFile.grid()
         URLLocation.grid()
+        
         hiddenLocal = False
     else:
+        # Action if URL radiobutton is not selected
         labelURLFile.grid()
         URLLocation.grid()
+        selectFile.grid_remove()
         labelLocalFile.grid_remove()
         fileLocation.grid_remove()
         hiddenLocal = True
     hiddenURL = not hiddenURL
+    print(option.get())
 
-localFilechkstate = BooleanVar()
-localFilechkstate.set(True) #set check state
-
-urlchkstate = BooleanVar()
-urlchkstate.set(False) #set check state
-
-localFilechk = Checkbutton(grouplocalremote, text='Local File', command=localfile, var=localFilechkstate)
-localFilechk.grid(column=0, row=0)
-urlchk = Checkbutton(grouplocalremote,text='Use URL', command=useurl, var=urlchkstate)
+option = StringVar()
+option.set("local") 
+localfilechk = Radiobutton(grouplocalremote, text='Local File', command=localfile, var=option, value="local")
+localfilechk.grid(column=0, row=0)
+urlchk = Radiobutton(grouplocalremote,text='Use URL', command=useurl, var=option, value="url")
 urlchk.grid(column=1, row=0)
 
 labelLocalFile = Label(group1, text="Select your original video file")
