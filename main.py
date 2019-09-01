@@ -36,22 +36,33 @@ grouplocalremote.grid(padx=1, pady=1)
 def localfile():
     global hiddenLocal
     if hiddenLocal:
-        fileLocation.grid_remove()
-        labelURLFile.grid()
-    else:
+        labelLocalFile.grid()
         fileLocation.grid()
+        labelURLFile.grid_remove()
+        URLLocation.grid_remove()
+        hiddenURL = False
+    else:
+        labelURLFile.grid_remove()
+        URLLocation.grid_remove()
+        labelLocalFile.grid()
+        fileLocation.grid()
+        hiddenURL = True
     hiddenLocal = not hiddenLocal
 
 def useurl():
     global hiddenURL
     if hiddenURL:
-        fileLocation.grid_remove()
         labelLocalFile.grid_remove()
-
+        fileLocation.grid_remove()
         labelURLFile.grid()
+        URLLocation.grid()
+        hiddenLocal = False
     else:
-        fileLocation.grid()
-        labelLocalFile.grid()
+        labelURLFile.grid()
+        URLLocation.grid()
+        labelLocalFile.grid_remove()
+        fileLocation.grid_remove()
+        hiddenLocal = True
     hiddenURL = not hiddenURL
 
 localFilechkstate = BooleanVar()
@@ -73,6 +84,9 @@ labelURLFile.grid(column=0, row=1)
 
 fileLocation = Entry(group1,width=48)
 fileLocation.grid(column=0, row=2)
+
+URLLocation = Entry(group1,width=48)
+URLLocation.grid(column=0, row=2)
 # Action after pressing ... button to selectfile
 def selectFileItem():
     # Open file selecter and making path variable
