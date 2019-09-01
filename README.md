@@ -1,5 +1,6 @@
 # jumpcutter-gui
 ![screenshot](https://i.issei.space/hhlv4.png)
+![screenshot](https://i.issei.space/01ucm.png)
 ## What is jumpcutter?
 It is a Python script originally writed by [carykh](https://github.com/carykh/jumpcutter) that detect where in video volume level is lower than X value and cuts out those frames and audio.  
 Warning: it can be using a lot of disk space and CPU, depends on quality and length of video you are trying to jumpcut
