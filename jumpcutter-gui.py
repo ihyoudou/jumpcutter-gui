@@ -12,6 +12,7 @@ from subprocess import call
 window = Tk()
 window.title("jumpcutter-gui")
 window.geometry('320x300')
+window.resizable(False, False)
 
 # Variables
 selectedFile = ""
