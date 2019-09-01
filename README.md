@@ -1,8 +1,8 @@
 # jumpcutter-gui
 ## What is jumpcutter?
-
+It is a Python script originally writed by [carykh](https://github.com/carykh/jumpcutter) that detect where in video there is volume level lower than X value and just cut frames and audio.
 ## How to install
-
+Manual way:  
 ```
 git clone https://github.com/isseihere/jumpcutter-gui
 cd jumpcutter-gui
@@ -16,3 +16,6 @@ Tested on Windows 8.1 (amd64, Python 3.7.3), Windows 10 (amd64, Python 3.7.3), D
 ## Troubleshooting
 **My final video have audio of sync, what to do?!**  
 You need to specify FPS value, it is pretty common issue with 50fps videos
+
+##Known issues
+- Youtube links don't work (some sort of problem in pyTube, will be replaced with youtube-dl)
