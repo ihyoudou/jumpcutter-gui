@@ -4,6 +4,7 @@ from tkinter import messagebox
 import os
 import os.path
 import shutil
+from subprocess import call
 
 window = Tk()
 window.title("jumpcutter-gui")
@@ -49,6 +50,7 @@ def selectFileItem():
     # Writing save location to variable
     global saveFile
     saveFile = saveFileLocation.get()
+
     # Debug messagebox with path
     #messagebox.showinfo('Selected video path',selectedFile)
     
@@ -95,9 +97,10 @@ label4.grid(column=0,row=7)
 silentthreshold = Entry(group2,width=4)
 silentthreshold.grid(column=4, row=7)
 
-label5 = Label(group2, text="Silent speed (default=9999)")
+label5 = Label(group2, text="Silent speed (default=99999)")
 label5.grid(column=0,row=9)
 silentspeed = Entry(group2,width=4)
+silentspeed.insert(0, '99999')
 silentspeed.grid(column=4, row=9)
 
 # Action after clicking Go! button
@@ -113,7 +116,7 @@ def execute():
     if saveFile == "":
         messagebox.showinfo('Warning', "Output file was not set!")
     else:
-        jumpcutterCMD = jumpcutterCMD + "--output_file " + saveFile
+        jumpcutterCMD = jumpcutterCMD + " --output_file " + saveFile
 
     # Checking if fps entry is empty
     if fps.index("end") == 0:
@@ -144,7 +147,10 @@ def execute():
     messagebox.showinfo('jumpcutter-gui', "Main GUI window will be unresponsive until jumpcutting process will be finished")
     # Executing command
     # !!! Add support detection for linux and macos
-    os.system("start /wait cmd /c " + jumpcutterCMD)
+    call(jumpcutterCMD, shell=True)
+    MsgBox = messagebox.askquestion ('Done!','Jumpcutting is done, do you want to play jumpcutted version?',icon = 'info')
+    if MsgBox == 'yes':
+        call(saveFile, shell=True)
 
 executeButton = Button(window, text="Go!", command=execute)
 executeButton.grid(column=0,row=8)
