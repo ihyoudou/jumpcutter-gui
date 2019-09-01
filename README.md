@@ -14,11 +14,9 @@ python jumpcutter-gui.py
 ```
 You also need to have ffmpeg installed!
 
-Tested on Windows 8.1 (amd64, Python 3.7.3), Windows 10 (amd64, Python 3.7.3)
+Tested on Windows 8.1 (amd64, Python 3.7.3), Windows 10 (amd64, Python 3.6.7)
 
 ## Troubleshooting
 **My final video have audio of sync, what to do?!**  
 You need to specify FPS value, it is pretty common issue with 50fps videos
 
-## Known issues
-- Youtube links don't work (some sort of problem in pyTube, need to be replaced with youtube-dl)
