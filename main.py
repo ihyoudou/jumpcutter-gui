@@ -72,10 +72,14 @@ def useurl():
     hiddenURL = not hiddenURL
     print(option.get())
 
+# Variable that is responsible for allow only one radiobutton to be selected
 option = StringVar()
-option.set("local") 
+# By default select local file radiobutton
+option.set("local")
+# Local file radiobutton 
 localfilechk = Radiobutton(grouplocalremote, text='Local File', command=localfile, var=option, value="local")
 localfilechk.grid(column=0, row=0)
+# URL radiobutton
 urlchk = Radiobutton(grouplocalremote,text='Use URL', command=useurl, var=option, value="url")
 urlchk.grid(column=1, row=0)
 
@@ -83,6 +87,8 @@ labelLocalFile = Label(group1, text="Select your original video file")
 labelLocalFile.grid(column=0, row=1)
 labelURLFile = Label(group1, text="Enter your URL")
 labelURLFile.grid(column=0, row=1)
+# Remove on startup URL label
+labelURLFile.grid_remove()
 
 
 fileLocation = Entry(group1,width=48)
@@ -90,6 +96,8 @@ fileLocation.grid(column=0, row=2)
 
 URLLocation = Entry(group1,width=48)
 URLLocation.grid(column=0, row=2)
+# Remove on startup URL textbox
+URLLocation.grid_remove()
 # Action after pressing ... button to selectfile
 def selectFileItem():
     # Open file selecter and making path variable
