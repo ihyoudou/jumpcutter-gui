@@ -13,23 +13,66 @@ window.geometry('320x300')
 # Variables
 selectedFile = ""
 saveFile = ""
+hiddenLocal = False
+hiddenURL = True
+
+
+
+
 # Checking if TEMP folder exist (failed/cancelled task)
 if os.path.exists("TEMP"):
     MsgBox = messagebox.askquestion ('Warning','TEMP folder exist, probably because of failed/canceled job. Do you want do delete it? If you dont delete it, jumpcutting will fail.',icon = 'warning')
     if MsgBox == 'yes':
-       shutil.rmtree("TEMP", ignore_errors=True)
+        # If user select yes then remove TEMP folder and ignore (readonly) errors
+        shutil.rmtree("TEMP", ignore_errors=True)
 
 # First group of widgets - select original file and place to save jumpcutted
 group1 = LabelFrame(window, text="File", padx=1, pady=1)
 group1.grid(padx=1, pady=1)
 
+grouplocalremote = LabelFrame(group1, text="Use Local/URL", padx=1, pady=1)
+grouplocalremote.grid(padx=1, pady=1)
 
+def localfile():
+    global hiddenLocal
+    if hiddenLocal:
+        fileLocation.grid_remove()
+        labelURLFile.grid()
+    else:
+        fileLocation.grid()
+    hiddenLocal = not hiddenLocal
 
-label1 = Label(group1, text="Select your original video file")
-label1.grid(column=0, row=0)
+def useurl():
+    global hiddenURL
+    if hiddenURL:
+        fileLocation.grid_remove()
+        labelLocalFile.grid_remove()
+
+        labelURLFile.grid()
+    else:
+        fileLocation.grid()
+        labelLocalFile.grid()
+    hiddenURL = not hiddenURL
+
+localFilechkstate = BooleanVar()
+localFilechkstate.set(True) #set check state
+
+urlchkstate = BooleanVar()
+urlchkstate.set(False) #set check state
+
+localFilechk = Checkbutton(grouplocalremote, text='Local File', command=localfile, var=localFilechkstate)
+localFilechk.grid(column=0, row=0)
+urlchk = Checkbutton(grouplocalremote,text='Use URL', command=useurl, var=urlchkstate)
+urlchk.grid(column=1, row=0)
+
+labelLocalFile = Label(group1, text="Select your original video file")
+labelLocalFile.grid(column=0, row=1)
+labelURLFile = Label(group1, text="Enter your URL")
+labelURLFile.grid(column=0, row=1)
+
 
 fileLocation = Entry(group1,width=48)
-fileLocation.grid(column=0, row=1)
+fileLocation.grid(column=0, row=2)
 # Action after pressing ... button to selectfile
 def selectFileItem():
     # Open file selecter and making path variable
@@ -56,13 +99,13 @@ def selectFileItem():
     
 # Button to open file item selection box
 selectFile = Button(group1, text="...", command=selectFileItem)
-selectFile.grid(column=2, row=1)
+selectFile.grid(column=2, row=2)
 
 label2 = Label(group1, text="Localization of jumpcutted video file")
-label2.grid(column=0, row=2)
+label2.grid(column=0, row=3)
 
 saveFileLocation = Entry(group1,width=48)
-saveFileLocation.grid(column=0, row=3)
+saveFileLocation.grid(column=0, row=4)
 # Action after pressing ... button to save file
 def saveFileItem():
     # Open file selecter and making path variable
@@ -75,7 +118,7 @@ def saveFileItem():
     
 
 saveButtonFile = Button(group1, text="...", command=saveFileItem)
-saveButtonFile.grid(column=2, row=3)
+saveButtonFile.grid(column=2, row=4)
 
 # Group 2 - it is for general manipulation, FPS, sounded speed, silent threshold, silent speed
 group2 = LabelFrame(window, text="General", padx=1, pady=1)
