@@ -11,7 +11,7 @@ from subprocess import call
 
 window = Tk()
 window.title("jumpcutter-gui")
-window.geometry('320x300')
+window.geometry('320x330')
 window.resizable(False, False)
 
 # Variables
@@ -160,6 +160,7 @@ fps.grid(column=4, row=1)
 label3 = Label(group2, text="Sounded speed (default=1)")
 label3.grid(column=0,row=5)
 soundspeed = Entry(group2,width=4)
+soundspeed.insert(0, '1')
 soundspeed.grid(column=4, row=5)
 
 label4 = Label(group2, text="Silent threshold (from 0 to 1)")
@@ -172,6 +173,13 @@ label5.grid(column=0,row=9)
 silentspeed = Entry(group2,width=4)
 silentspeed.insert(0, '99999')
 silentspeed.grid(column=4, row=9)
+
+# quality of frames to be extracted from input video. 1 is highest, 31 is lowest, 3 is the default.
+qualityLabel = Label(group2, text="Quality of frames (default=3)")
+qualityLabel.grid(column=0,row=10)
+framesQuality = Entry(group2,width=4)
+framesQuality.insert(0, '3')
+framesQuality.grid(column=4, row=10)
 
 # Action after clicking Go! button
 def execute():
@@ -217,17 +225,29 @@ def execute():
         print("Silent speed is empty")
     else:
         jumpcutterCMD = jumpcutterCMD + " --silent_speed " + silentspeed.get()
+    
+    # Checking if frames quality entry is empty
+    if framesQuality.index("end") == 0:
+        print("Frames quality entry is empty, using default")
+    else:
+        jumpcutterCMD = jumpcutterCMD + " --frame_quality " + framesQuality.get()
 
     # Debug msgbox with command that will be executed
     print('Executing: ' + jumpcutterCMD)
-    messagebox.showinfo('jumpcutter-gui', "Main GUI window will be unresponsive until jumpcutting process will be finished")
+    messagebox.showinfo('jumpcutter-gui', "Main GUI window will be unresponsive until jumpcutting process will be finished, please check terminal output for more info")
     # Executing command
     
     call(jumpcutterCMD, shell=True)
-    # !!! Add support detection for linux and macos
-    MsgBox = messagebox.askquestion ('Done!','Jumpcutting is done, do you want to play jumpcutted version?',icon = 'info')
-    if MsgBox == 'yes':
-        call(saveFile, shell=True)
+    # !!! Add support detection for linux and macos and error detection
+    if os.path.exists(".jumpcutterdone") == True:
+        os.remove(".jumpcutterdone")
+        print('Jumpcutting has finished with success, deleting .jumpcutterdone file')
+        MsgBox = messagebox.askquestion ('Done!','Jumpcutting is done, do you want to play jumpcutted version?',icon = 'info')
+        if MsgBox == 'yes':
+            call(saveFile, shell=True)
+    else:
+        print('Error! .jumpcutterdone was not found')
+        messagebox.showerror('Error!', "Something gone wrong, please check your terminal output")
 
 executeButton = Button(window, text="Go!", command=execute)
 executeButton.grid(column=0,row=8)

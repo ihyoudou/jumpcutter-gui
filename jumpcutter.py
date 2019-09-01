@@ -12,6 +12,10 @@ import os
 import argparse
 from pytube import YouTube
 
+def statuscheck():
+    if os.path.exists(".jumpcutterdone"):
+        os.remove(".jumpcutterdone")
+
 def downloadFile(url):
     name = YouTube(url).streams.first().download()
     newname = name.replace(' ','_')
@@ -67,6 +71,7 @@ parser.add_argument('--frame_quality', type=int, default=3, help="quality of fra
 args = parser.parse_args()
 
 
+statuscheck()
 
 frameRate = args.frame_rate
 SAMPLE_RATE = args.sample_rate
@@ -200,5 +205,7 @@ for endGap in range(outputFrame,audioFrameCount):
 command = "ffmpeg -framerate "+str(frameRate)+" -i "+TEMP_FOLDER+"/newFrame%06d.jpg -i "+TEMP_FOLDER+"/audioNew.wav -strict -2 "+OUTPUT_FILE
 subprocess.call(command, shell=True)
 
+f = open(".jumpcutterdone", "w+")
+f.close()
 deletePath(TEMP_FOLDER)
 
