@@ -175,47 +175,54 @@ silentspeed.grid(column=4, row=9)
 def execute():
 
     # Checking if file is selected + base command
-    if selectedFile == "":
-        messagebox.showinfo('Warning', "Input file was not set!")
-    else:
-        jumpcutterCMD = "python jumpcutter.py --input_file " + selectedFile
+    if option == "local":
+        if selectedFile == "":
+            messagebox.showinfo('Warning', "Input file was not set!")
+        else:
+            jumpcutterCMD = "python jumpcutter.py --input_file " + selectedFile
+    elif option == "url":
+        if URLLocation.get() == "":
+            messagebox.showinfo('Warning', "Input URL was not set!")
+        else:
+            jumpcutterCMD = "python jumpcutter.py --url " + URLLocation.get()
 
     # Checking if save destination entry is empty
     if saveFile == "":
-        messagebox.showinfo('Warning', "Output file was not set!")
+       print("Output file was not set!")
     else:
         jumpcutterCMD = jumpcutterCMD + " --output_file " + saveFile
 
     # Checking if fps entry is empty
     if fps.index("end") == 0:
-        fps_empty = True
+        print("FPS entry is empty, using autodetect. If your final video is out of sync you need to enter FPS value")
     else:
        jumpcutterCMD = jumpcutterCMD + " --frame_rate " + fps.get()
 
     # Checking if sound speed entry is empty
     if soundspeed.index("end") == 0:
-        soundspeed_empty = True
+        print("Sounded speed is empty, using default (1)")
     else:
         jumpcutterCMD = jumpcutterCMD + " --sounded_speed " + soundspeed.get()
 
     # Checking if silent threshold entry is empty
     if silentthreshold.index("end") == 0:
-        silentthreshold_empty = True
+        print("Silent threshold is empty, using default (1)")
     else:
         jumpcutterCMD = jumpcutterCMD + " --silent_threshold " + silentthreshold.get()
 
     # Checking if silent speed entry is empty
     if silentspeed.index("end") == 0:
-        silentspeed_empty = True
+        print("Silent speed is empty")
     else:
         jumpcutterCMD = jumpcutterCMD + " --silent_speed " + silentspeed.get()
 
     # Debug msgbox with command that will be executed
-    messagebox.showinfo('Executing', jumpcutterCMD)
+    print('Executing: ' + jumpcutterCMD)
     messagebox.showinfo('jumpcutter-gui', "Main GUI window will be unresponsive until jumpcutting process will be finished")
     # Executing command
-    # !!! Add support detection for linux and macos
+    
     call(jumpcutterCMD, shell=True)
+    # !!! Add support detection for linux and macos
     MsgBox = messagebox.askquestion ('Done!','Jumpcutting is done, do you want to play jumpcutted version?',icon = 'info')
     if MsgBox == 'yes':
         call(saveFile, shell=True)
@@ -223,5 +230,3 @@ def execute():
 executeButton = Button(window, text="Go!", command=execute)
 executeButton.grid(column=0,row=8)
 window.mainloop()
-
-
