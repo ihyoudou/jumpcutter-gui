@@ -18,33 +18,18 @@ def statuscheck():
 def downloadFile(url):
     # I replaced PyTube with youtube-dl, not the pretties code, but it works!
     ydl_opts = {
-        'outtmpl': '%(title)s.%(ext)s'
-    }
+    'format': 'bestvideo+bestaudio',
+    'restrictfilenames':True,
+    'forcefilename':True,
+    } 
+
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        ytdl = ydl.download([url])
-        info = ydl.extract_info(url, download=True)
-        name = ydl.prepare_filename(info)
-    # Variable that store filename without extension (because youtube-dl gives filename before merge)
-    withoutExtension = name.replace(os.path.splitext(name)[1], '')
-    print("Without extension: " + withoutExtension)
-    # Now program is trying to find if .mp4/mkv/webm file exist, add proper extension and rename file to not have spaces
-    if os.path.exists(withoutExtension + ".mp4"):
-        nameWithExtension = withoutExtension + ".mp4"
-        newname = nameWithExtension.replace(' ','_')
-        os.rename(nameWithExtension,newname)
-        return newname
-    elif os.path.exists(withoutExtension + ".mkv"):
-        nameWithExtension = withoutExtension + ".mkv"
-        newname = nameWithExtension.replace(' ','_')
-        os.rename(nameWithExtension,newname)
-        return newname
-    elif os.path.exists(withoutExtension + ".webm"):
-        nameWithExtension = withoutExtension + ".webm"
-        newname = nameWithExtension.replace(' ','_')
-        os.rename(nameWithExtension,newname)
-        return newname
-    else:
-        print("Cannot find downloaded file")
+        ytdl = ydl.extract_info(url, download=True)
+        filename = ydl.prepare_filename(ytdl)
+        filename = os.path.splitext(filename)[0] + '.mkv'
+        return filename
+        print('filename: ',filename)
+
 def getMaxVolume(s):
     maxv = float(np.max(s))
     minv = float(np.min(s))
