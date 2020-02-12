@@ -16,7 +16,7 @@ python jumpcutter-gui.py
 ```
 You also need to have ffmpeg and youtube-dl installed.
 
-Tested on Windows 8.1 (amd64, Python 3.7.3), Windows 10 (amd64, Python 3.6.7)
+Tested on Windows 8.1 (amd64, Python 3.7.3), Windows 10 (amd64, Python 3.6.7), Debian 10.2 (amd64, Python 3.7.3)
 
 ## Troubleshooting
 **My final video have audio of sync, what to do?!**  
