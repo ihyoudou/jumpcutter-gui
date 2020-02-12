@@ -1,4 +1,4 @@
-# Jumpcutter-gui by Issei Hyoudou 2019
+# Jumpcutter-gui by Issei Hyoudou 2020
 # Contact: issei@issei.space
 # Repo: https://github.com/isseihere/jumpcutter-gui
 from tkinter import *
@@ -24,7 +24,7 @@ jumpcutterCMD = "python jumpcutter.py"
 
 # Checking if TEMP folder exist (failed/cancelled task)
 if os.path.exists("TEMP"):
-    MsgBox = messagebox.askquestion ('Warning','TEMP folder exist, probably because of failed/canceled job. Do you want do delete it? If you dont delete it, jumpcutting will fail.',icon = 'warning')
+    MsgBox = messagebox.askquestion ('Warning','TEMP folder exist, probably because of failed/canceled job. Do you want do delete it?',icon = 'warning')
     if MsgBox == 'yes':
         # If user select yes then remove TEMP folder and ignore (readonly) errors
         shutil.rmtree("TEMP", ignore_errors=True)
@@ -105,7 +105,7 @@ def selectFileItem():
     # Open file selecter and making path variable
     global selectedFile
     # Clearing saveFileLocation
-    saveFileLocation.insert('')
+    saveFileLocation.delete(0, END)
     selectedFile = filedialog.askopenfilename()
     # Writing path to label
     fileLocation.insert(END, selectedFile)
@@ -118,7 +118,8 @@ def selectFileItem():
     # Combaining original Path with filename (without extension)
     finalname = (originalPath + os.path.splitext(baseFileName)[0])
     # Inserting original Path with filename + _jumpcut suffix + original extension
-    saveFileLocation.insert(END, finalname + '_jumpcut' + extension)
+    if (selectedFile != ""):
+        saveFileLocation.insert(END, finalname + '_jumpcut' + extension)
     # Writing save location to variable
     global saveFile
     saveFile = saveFileLocation.get()
