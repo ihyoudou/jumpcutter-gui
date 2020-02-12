@@ -14,7 +14,7 @@ cd jumpcutter-gui
 pip install -r requirements.txt
 python jumpcutter-gui.py
 ```
-You also need to have ffmpeg installed!
+You also need to have ffmpeg and youtube-dl installed.
 
 Tested on Windows 8.1 (amd64, Python 3.7.3), Windows 10 (amd64, Python 3.6.7)
 
