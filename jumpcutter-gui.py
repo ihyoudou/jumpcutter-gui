@@ -104,6 +104,8 @@ URLLocation.grid_remove()
 def selectFileItem():
     # Open file selecter and making path variable
     global selectedFile
+    # Clearing saveFileLocation
+    saveFileLocation.insert('')
     selectedFile = filedialog.askopenfilename()
     # Writing path to label
     fileLocation.insert(END, selectedFile)
@@ -157,7 +159,7 @@ label2.grid(column=0,row=1)
 fps = Entry(group2,width=4)
 fps.grid(column=4, row=1)
 
-label3 = Label(group2, text="Sounded speed (default=1)")
+label3 = Label(group2, text="Sounded speed (def=1)")
 label3.grid(column=0,row=5)
 soundspeed = Entry(group2,width=4)
 soundspeed.insert(0, '1')
