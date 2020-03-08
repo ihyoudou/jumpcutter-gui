@@ -10,7 +10,7 @@ import shutil
 from subprocess import call
 
 window = Tk()
-window.title("jumpcutter-gui")
+window.title("Jumpcutter GUI")
 window.geometry('320x330')
 window.resizable(False, False)
 
@@ -24,12 +24,12 @@ jumpcutterCMD = "python jumpcutter.py"
 
 # Checking if TEMP folder exist (failed/cancelled task)
 if os.path.exists("TEMP"):
-    MsgBox = messagebox.askquestion ('Warning','TEMP folder exist, probably because of failed/canceled job. Do you want do delete it?',icon = 'warning')
+    MsgBox = messagebox.askquestion ('Warning','TEMP folder exist, probably because of failed or canceled job. Do you want do delete it?',icon = 'warning')
     if MsgBox == 'yes':
         # If user select yes then remove TEMP folder and ignore (readonly) errors
         shutil.rmtree("TEMP", ignore_errors=True)
 
-# First group of widgets - select original file and place to save jumpcutted
+# First group of widgets - select original file and place to save jumpcutted version
 group1 = LabelFrame(window, text="Main", padx=1, pady=1)
 group1.grid(padx=1, pady=1)
 
@@ -85,9 +85,9 @@ localfilechk.grid(column=0, row=0)
 urlchk = Radiobutton(grouplocalremote,text='Use URL', command=useurl, var=option, value="url")
 urlchk.grid(column=1, row=0)
 
-labelLocalFile = Label(group1, text="Select your original video file")
+labelLocalFile = Label(group1, text="Original video file")
 labelLocalFile.grid(column=0, row=1)
-labelURLFile = Label(group1, text="Enter your URL")
+labelURLFile = Label(group1, text="Original video URL")
 labelURLFile.grid(column=0, row=1)
 # Remove on startup URL label
 labelURLFile.grid_remove()
@@ -131,7 +131,7 @@ def selectFileItem():
 selectFile = Button(group1, text="...", command=selectFileItem)
 selectFile.grid(column=2, row=2)
 
-label2 = Label(group1, text="Localization of jumpcutted video file")
+label2 = Label(group1, text="Save to")
 label2.grid(column=0, row=3)
 
 saveFileLocation = Entry(group1,width=48)
@@ -184,7 +184,7 @@ framesQuality = Entry(group2,width=4)
 framesQuality.insert(0, '3')
 framesQuality.grid(column=4, row=10)
 
-# Action after clicking Go! button
+# Action after clicking start button
 def execute():
     global jumpcutterCMD
     # Checking if file is selected + base command
@@ -207,7 +207,7 @@ def execute():
 
     # Checking if fps entry is empty
     if fps.index("end") == 0:
-        print("FPS entry is empty, using autodetect. If your final video is out of sync you need to enter FPS value")
+        print("FPS entry is empty, using autodetect. If your final video is out of sync you need to enter proper FPS value")
     else:
        jumpcutterCMD = jumpcutterCMD + " --frame_rate " + fps.get()
 
@@ -237,7 +237,7 @@ def execute():
 
     # Debug msgbox with command that will be executed
     print('Executing: ' + jumpcutterCMD)
-    messagebox.showinfo('jumpcutter-gui', "Main GUI window will be unresponsive until jumpcutting process will be finished, please check terminal output for more info")
+    messagebox.showinfo('jumpcutter-gui', "Main GUI window will be unresponsive until jumpcutting process will be finished, please check terminal output for more information")
     # Executing command
     
     call(jumpcutterCMD, shell=True)
@@ -245,13 +245,13 @@ def execute():
     if os.path.exists(".jumpcutterdone") == True:
         os.remove(".jumpcutterdone")
         print('Jumpcutting has finished with success, deleting .jumpcutterdone file')
-        MsgBox = messagebox.askquestion ('Done!','Jumpcutting is done, do you want to play jumpcutted version?',icon = 'info')
+        MsgBox = messagebox.askquestion ('Done!','Jumpcutting is done, do you want play jumpcutted version?',icon = 'info')
         if MsgBox == 'yes':
             call(saveFile, shell=True)
     else:
         print('Error! .jumpcutterdone was not found')
-        messagebox.showerror('Error!', "Something gone wrong, please check your terminal output")
+        messagebox.showerror('Error!', "An error occurred, please check your terminal window")
 
-executeButton = Button(window, text="Go!", command=execute)
+executeButton = Button(window, text="Start", command=execute)
 executeButton.grid(column=0,row=8)
 window.mainloop()
