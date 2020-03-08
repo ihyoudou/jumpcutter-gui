@@ -26,6 +26,6 @@ Tested on Windows 8.1 (amd64, Python 3.7.3), Windows 10 (amd64, Python 3.6.7), D
 **My final video have audio of sync, what to do?!**  
 You need to specify FPS value, it is pretty common issue with 50fps videos
 
-**Youtube-dl is not downloading youtube video**
+**Youtube-dl is not downloading youtube video**  
 Please try updating youtube-dl to newest version using
 ```youtube-dl -U``` command
